@@ -1,0 +1,101 @@
+<div class="container">
+  <mat-toolbar>
+    <span>Libros</span>
+  </mat-toolbar>
+  <br>
+  <button mat-raised-button color="primary" class="custom-button" (click)="mostrarFormulario()">Agregar</button>
+  <br><br>
+  <h1 class="encabezado">Tabla de Libros</h1>
+  <table class="table table-borderless tabla-usuarios">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>titulo</th>
+        <th>genero</th>
+        <th>aniopublicacion</th>
+        <th>ISBN</th>
+        <th>Autor</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let libro of livto.slice((paginaActual - 1) * elementosPorPagina, paginaActual * elementosPorPagina)">
+        <td>{{ libro.id }}</td>
+        <td>{{ libro.titulo }}</td>
+        <td>{{ libro.genero }}</td>
+        <td>{{ libro.aniopublicacion }}</td>
+        <td>{{ libro.ISBN }}</td>
+        <td>{{ libro.autor?.nombre }}</td>
+        <td>
+          <button (click)="abrirFormularioEditar(libro)" class="icon-button edit-button">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button (click)="eliminarRegistroL(libro.id)" class="icon-button delete-button">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="centro-horizontal">
+    <button class="pagina-boton" (click)="paginaActual = paginaActual - 1" [disabled]="paginaActual === 1">Anterior</button>
+    <span class="pagina-actual">Página {{ paginaActual }}</span>
+    <button class="pagina-boton" (click)="paginaActual = paginaActual + 1" [disabled]="livto.length <= paginaActual * elementosPorPagina">Siguiente</button>
+  </div>
+
+  <div *ngIf="formularioActivo" class="registrar2">
+    <h2>Formulario de registro de libros</h2>
+    <form enctype="multipart/form-data">
+      <label for="titulo">Titulo:</label>
+      <input type="text" id="titulo" name="titulo" required [(ngModel)]="titulo">
+
+      <label for="genero">Genero:</label>
+      <input type="text" id="genero" name="genero" required [(ngModel)]="genero">
+      <br><br>
+      <label for="aniopublicacion">Año de Publicacion:</label>
+      <input type="number" id="aniopublicacion" class="yyy" name="aniopublicacion" required [(ngModel)]="aniopublicacion">
+
+      <label for="ISBN">ISBN:</label>
+      <input type="text" class="yyy" id="ISBN" name="ISBN" required [(ngModel)]="ISBN">
+      <br><br>
+
+      <label for="autor">Autor:</label>
+      <select id="autor" name="autor" required [(ngModel)]="selectedAutorId">
+        <option *ngFor="let autor of autores" [value]="autor.id">{{ autor.nombre }}</option>
+      </select>
+      <br><br>
+
+      <div class="botonera">
+        <button type="submit" (click)="!formularioValido(); submitForm()">Registrar</button>
+        <button (click)="closeModal()" class="cerrar">Cerrar</button>
+      </div>
+    </form>
+  </div>
+
+  <div *ngIf="formularioEditarActivo" class="registrar2">
+    <h2>Editar Registro</h2>
+    <form (submit)="actualizarRegistroL()">
+      <label for="titulo">Titulo:</label>
+      <input type="text" id="titulo" name="titulo" required [(ngModel)]="this.registroSeleccionado.titulo">
+
+      <label for="genero">Genero:</label>
+      <input type="text" id="genero" name="genero" required [(ngModel)]="this.registroSeleccionado.genero">
+      <br><br>
+      <label for="aniopublicacion">Año de Publicacion:</label>
+      <input type="number" id="aniopublicacion" class="yyy" name="aniopublicacion" required [(ngModel)]="this.registroSeleccionado.aniopublicacion">
+      <br><br>
+      <label for="ISBN">ISBN:</label>
+      <input type="text" class="yyy" id="ISBN" name="ISBN" required [(ngModel)]="this.registroSeleccionado.ISBN">
+      <br><br>
+      <label for="autor">Autor:</label>
+      <select id="autor" name="autor" required [(ngModel)]="this.registroSeleccionado.autor_id">
+        <option *ngFor="let autor of autores" [value]="autor.id">{{ autor.nombre }}</option>
+      </select>
+      <br><br>
+      <div class="botonera">
+        <button type="submit">Guardar Cambios</button>
+        <button (click)="cerrarFormularioEditarL()" class="cerrar">Cerrar</button>
+      </div>
+    </form>
+  </div>
+</div>

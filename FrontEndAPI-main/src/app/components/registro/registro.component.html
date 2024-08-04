@@ -1,0 +1,79 @@
+<div class="body">
+  <div class="login">
+    
+    <h1 class="h1 mb-3 fw-normal">Registro</h1>
+    <div class="register">
+      <form [formGroup]="registroForm" (ngSubmit)="submitForm()" enctype="multipart/form-data">
+        <label for="nombre">Nombre:</label>
+        <p></p>
+        <input 
+          type="text" 
+          id="nombres" 
+          formControlName="nombres">
+        <div *ngIf="registroForm.get('nombres')?.invalid && (registroForm.get('nombres')?.dirty || registroForm.get('nombres')?.touched)" class="error-message">
+          <small *ngIf="registroForm.get('nombres')?.errors?.['required']">El nombre es obligatorio.</small>
+          <small *ngIf="registroForm.get('nombres')?.errors?.['minlength']">El nombre debe tener al menos 2 caracteres.</small>
+          <small *ngIf="registroForm.get('nombres')?.errors?.['pattern']">El nombre solo puede contener letras y espacios.</small>
+        </div>
+        <p></p>
+        <label for="apellido">Apellido:</label>
+        <p></p>
+        <input 
+          type="text" 
+          id="apellidos" 
+          formControlName="apellidos">
+        <div *ngIf="registroForm.get('apellidos')?.invalid && (registroForm.get('apellidos')?.dirty || registroForm.get('apellidos')?.touched)" class="error-message">
+          <small *ngIf="registroForm.get('apellidos')?.errors?.['required']">El apellido es obligatorio.</small>
+          <small *ngIf="registroForm.get('apellidos')?.errors?.['minlength']">El apellido debe tener al menos 2 caracteres.</small>
+          <small *ngIf="registroForm.get('apellidos')?.errors?.['pattern']">El apellido solo puede contener letras y espacios.</small>
+        </div>
+        <p></p>
+        <label for="email">Email:</label>
+        <p></p>
+        <input 
+          type="email" 
+          id="email" 
+          class="yyy" 
+          formControlName="email">
+        <div *ngIf="registroForm.get('email')?.invalid && (registroForm.get('email')?.dirty || registroForm.get('email')?.touched)" class="error-message">
+          <small *ngIf="registroForm.get('email')?.errors?.['required']">El email es obligatorio.</small>
+          <small *ngIf="registroForm.get('email')?.errors?.['email']">El email debe tener un formato válido.</small>
+        </div>
+        <p></p>
+        <label for="edad">Edad:</label>
+        <br><br>
+        <input 
+          type="number" 
+          class="yyy" 
+          id="edad" 
+          formControlName="edad">
+        <div *ngIf="registroForm.get('edad')?.invalid && (registroForm.get('edad')?.dirty || registroForm.get('edad')?.touched)" class="error-message">
+          <small *ngIf="registroForm.get('edad')?.errors?.['required']">La edad es obligatoria.</small>
+          <small *ngIf="registroForm.get('edad')?.errors?.['min']">La edad debe ser al menos 1.</small>
+          <small *ngIf="registroForm.get('edad')?.errors?.['max']">La edad debe ser como máximo 100.</small>
+        </div>
+        <p></p>
+        <label for="password">Contraseña:</label>
+        <p></p>
+        <input 
+          type="password" 
+          id="password" 
+          formControlName="password">
+        <div *ngIf="registroForm.get('password')?.invalid && (registroForm.get('password')?.dirty || registroForm.get('password')?.touched)" class="error-message">
+          <small *ngIf="registroForm.get('password')?.errors?.['required']">La contraseña es obligatoria.</small>
+          <small *ngIf="registroForm.get('password')?.errors?.['minlength']">La contraseña debe tener al menos 8 caracteres.</small>
+          <small *ngIf="registroForm.get('password')?.errors?.['pattern']">La contraseña debe contener al menos un número, una letra y un carácter especial.</small>
+        </div>
+        <br><br>
+        <div class="botonera">
+          <button type="submit" [disabled]="registroForm.invalid || loading">Registrar</button>
+        </div>
+      </form>
+      <br>
+      <div>
+        Ya tienes cuenta?
+        <a routerLink="/login"><b>Inicia sesión</b></a>
+      </div>
+    </div>
+  </div>
+</div>

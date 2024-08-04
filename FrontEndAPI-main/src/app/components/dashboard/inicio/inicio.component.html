@@ -1,0 +1,68 @@
+<div class="container">
+  <mat-toolbar>
+    <span>Clientes</span>
+  </mat-toolbar>
+
+  <br>
+  <h1 class="encabezado">Tabla de Usuarios</h1>
+  <table class="tabla-usuarios">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Apellidos</th>
+        <th>Edad</th>
+        <th>Email</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let usuario of Usuarios.slice((paginaActual - 1) * elementosPorPagina, paginaActual * elementosPorPagina)">
+        <td>{{ usuario.id }}</td>
+        <td>{{ usuario.nombre }}</td>
+        <td>{{ usuario.apellidos }}</td>
+        <td>{{ usuario.edad }}</td>
+        <td>{{ usuario.email }}</td>
+        <td>
+          <button (click)="abrirFormularioEditar(usuario)" class="icon-button edit-button">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button (click)="eliminarRegistro(usuario.id)" class="icon-button delete-button">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="centro-horizontal">
+    <button class="pagina-boton" (click)="paginaActual = paginaActual - 1" [disabled]="paginaActual === 1">Anterior</button>
+    <span class="pagina-actual">Página {{ paginaActual }}</span>
+    <button class="pagina-boton" (click)="paginaActual = paginaActual + 1" [disabled]="Usuarios.length <= paginaActual * elementosPorPagina">Siguiente</button>
+  </div>
+
+  <div *ngIf="formularioEditarActivo" class="registrar2">
+    <h2>Editar Registro</h2>
+    <form (ngSubmit)="actualizarRegistro()">
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" required [(ngModel)]="registroSeleccionado.nombre">
+
+      <label for="apellidos">Apellido:</label>
+      <input type="text" id="apellidos" name="apellidos" required [(ngModel)]="registroSeleccionado.apellidos">
+      <br><br>
+      <label for="email">Email:</label>
+      <input type="email" id="email" class="yyy" name="email" required [(ngModel)]="registroSeleccionado.email">
+
+      <label for="edad">Edad:</label>
+      <input type="number" class="yyy" id="edad" name="edad" required [(ngModel)]="registroSeleccionado.edad">
+      <br><br>
+      <label for="password">Contraseña:</label>
+      <input type="password" id="password" name="password" required [(ngModel)]="registroSeleccionado.password">
+
+      <br><br>
+      <div class="botonera">
+        <button type="submit">Guardar Cambios</button>
+        <button type="button" (click)="cerrarFormularioEditar()" class="cerrar">Cerrar</button>
+      </div>
+    </form>
+  </div>
+</div>
